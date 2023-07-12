@@ -1,0 +1,46 @@
+Consider the Node definition below:
+
+struct Node {
+    int key;
+    Node *left, *right;
+};
+--------------------------------------------------------------
+Write a function to perform an inorder traversal.
+
+void inorder(Node *n) {
+    if (n != nullptr) {
+        inorder(n->left);
+        cout << n->key << endl;
+        inorder(n->right);
+    }
+}
+--------------------------------------------------------------
+Write a function to sum all the keys in the tre.
+
+int sum_values(Node *n) {
+    if (n == nullptr) {
+        return 0;
+    }
+    return sum_values(n->left) + n->key + sum_values(n->right);
+}
+---------------------------------------------------------------
+What is the running time of the algorithm we implemented to create a balanced binary tree from a sorted array of keys?
+
+T(n) = 2T(n/2) + theta(1)
+
+a = 2
+b = 2
+f(n) = n^0 => d = 0
+
+a _ b^d
+2 > 2^0
+
+T(n) is a number of theta(n^(lg 2)) = theta(n)
+-------------------------------------------------------------
+When checking if a binary tree is a BST, be careful of the following case.
+20-30-60 looks like a valid subtree, but the 60 should not be to the left of the root.
+    50
+   /
+  30
+ /  \
+20   60
