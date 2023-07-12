@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Name        : inversioncounter.cpp
- * Author      : Julia Nelson
+ * Author      : Juila Nelson
  * Version     : 1.0
- * Date        : March 30, 2020
+ * Date        : October 25, 2019
  * Description : Counts the number of inversions in an array.
  * Pledge      : I pledge my honor that I have abided by the Stevens Honor System.
  ******************************************************************************/
@@ -20,11 +20,10 @@ using namespace std;
 static long mergesort(int array[], int scratch[], int low, int high);
 
 /**
- * Counts the number of inversions in an array in theta(n^2) time.
- * slow
+ * Counts the number of inversions in an array in theta(n^2) time. 
+ * Slow - nested loops
  */
 long count_inversions_slow(int array[], int length) {
-    // TODO
     long counter = 0;                               // Used "long" not "int" because int was failing test cases with lots of arguments 
     for(int i = 0; i < length-1; i++){              // length-1 because i represents the front index of the compare statement
         for(int j = i + 1; j < length; j++){        // j+1 and not length-1 to get index after i including final index of array                                          
@@ -33,25 +32,29 @@ long count_inversions_slow(int array[], int length) {
             }
         }
     }
-    return counter;     
+    return counter;                                              
 }
+
 
 /**
  * Counts the number of inversions in an array in theta(n lg n) time.
+ * Fast - modified mergesort
  */
 long count_inversions_fast(int array[], int length) {
-    // TODO
-    // Hint: Use mergesort!
+    // Call mergesort!
     long counter = 0;
     int *scratch = new int[length];
     counter = mergesort(array, scratch, 0, length-1);
     delete[] scratch;
     return counter;
+    
 }
+
+
 
 /*
 * helper function acting as originally given mergesort inputs to merge the arrays
-
+*/
 static long merger(int array[], int scratch[], int low, int mid, int high) {
     int i = low;
     int j = mid;
@@ -77,9 +80,11 @@ static long merger(int array[], int scratch[], int low, int mid, int high) {
     }
     return inversionCount;
 }
+
+/*
+*   Implements the merge sort algorithm
 */
-static long mergesort(int array[], int scratch[], int low, int high) {
-    // TODO
+static long mergesort(int array[], int temp[], int low, int high){
     long mid;
     long count = 0;
     if (high > low) {
@@ -91,9 +96,46 @@ static long mergesort(int array[], int scratch[], int low, int high) {
     return count;
 }
 
+  /*
+    //create an empty array to hold the sorted list
+    int mid = low + (high - low);   
+    //scratch = array;
+    long total_inversions = 0;
+    //next we create crawlers for both intervals and the sorted array
+    int i = low;
+    int j = mid;
+    int k = 0;
+    //next  taverse both arrays and in each iteration add the smaller element 
+    // of both elements into our sorted  
+    while( i <= mid && j <= high){  //&& j <= high
+        if (array[i] <= array[j]){
+            //count_inversions_fast(array, sizeof(array)/ sizeof(array[0]));
+            //total_inversions++;
+            scratch[k++] = array[j++];
+        }else{
+            scratch[k++] = array[j++];
+            total_inversions = total_inversions + (mid - i);}
+    } 
+    while(i <= (mid-1)){
+        scratch[k++] = array[i++];
+    }
+    //add elements that are left in the second interval
+    while(j <= high){
+        scratch[k++] = array[j++];
+    }
+    //merge the arrays by copying our newly sorted array to the orignal
+    for( i = 0; i <= high - low ; i++){
+        array[i+low] = scratch[i];
+    }
+    return total_inversions;
+    */
+
+
+
+
 int main(int argc, char *argv[]) {
-    // TODO: parse command-line argument
-	bool useFast;
+
+    bool useFast;
                 // automatically use Fast version unless otherwise specified
 
     if (argc > 2) {                 // when there is more than 2 command line arguments ( other than name of file and "slow")
@@ -111,7 +153,6 @@ int main(int argc, char *argv[]) {
     if(argv[1] == NULL ){
          useFast = true;
     }
-/////////////
 
     cout << "Enter sequence of integers, each followed by a space: " << flush;
 
@@ -137,6 +178,7 @@ int main(int argc, char *argv[]) {
                 iss.clear();
                 ++index;
             }
+
             if (eoln) {
                 break;
             }
@@ -145,9 +187,9 @@ int main(int argc, char *argv[]) {
             str += c;
         }
     }
-
-    // TODO: produce output
-        if(values.empty()){
+    
+    // if no input
+    if(values.empty()){
         cerr << "Error: Sequence of integers not received." << endl;
         return 1;            
     }
@@ -169,8 +211,11 @@ int main(int argc, char *argv[]) {
             }
         }
 
-
-///////////
-
-    return 0;
+    
+    
 }
+
+    
+    
+
+
