@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Name        : inversioncounter.cpp
- * Author      : Julia Nelson
+ * Author      :
  * Version     : 1.0
- * Date        : March 30, 2020
+ * Date        :
  * Description : Counts the number of inversions in an array.
- * Pledge      : I pledge my honor that I have abided by the Stevens Honor System.
+ * Pledge      :
  ******************************************************************************/
 #include <iostream>
 #include <algorithm>
@@ -21,19 +21,10 @@ static long mergesort(int array[], int scratch[], int low, int high);
 
 /**
  * Counts the number of inversions in an array in theta(n^2) time.
- * slow
  */
 long count_inversions_slow(int array[], int length) {
     // TODO
-    long counter = 0;                               // Used "long" not "int" because int was failing test cases with lots of arguments 
-    for(int i = 0; i < length-1; i++){              // length-1 because i represents the front index of the compare statement
-        for(int j = i + 1; j < length; j++){        // j+1 and not length-1 to get index after i including final index of array                                          
-            if( array[i] > array[j]){               // if the value of index i is before index j and bigger, add 1 to counter
-                counter++;
-            }
-        }
-    }
-    return counter;     
+    return 0;////////////////
 }
 
 /**
@@ -42,58 +33,17 @@ long count_inversions_slow(int array[], int length) {
 long count_inversions_fast(int array[], int length) {
     // TODO
     // Hint: Use mergesort!
-    long counter = 0;
-    int *scratch = new int[length];
-    counter = mergesort(array, scratch, 0, length-1);
-    delete[] scratch;
-    return counter;
+    return 0;////////////////
 }
 
-/*
-* helper function acting as originally given mergesort inputs to merge the arrays
-
-static long merger(int array[], int scratch[], int low, int mid, int high) {
-    int i = low;
-    int j = mid;
-    int k = low;
-    long inversionCount = 0;
-
-    while ( ( i <= mid - 1 ) && ( j <= high ) ) {
-        if (array[i] <= array[j]){ //when low item is less than high item
-            scratch[k++] = array[i++];
-        } else {
-            scratch[k++] = array[j++];
-            inversionCount += (mid - i); //find how many convertion is performed
-        }
-    }
-    while (i <= mid - 1){ //if first list has remaining item, add them in the list
-        scratch[k++] = array[i++];
-    }
-    while (j <= high){ //if second list has remaining item, add them in the list
-        scratch[k++] = array[j++];
-    }
-    for (i=low; i <= high; i++){
-        array[i] = scratch[i]; //store (temp) scratch array to main array
-    }
-    return inversionCount;
-}
-*/
 static long mergesort(int array[], int scratch[], int low, int high) {
     // TODO
-    long mid;
-    long count = 0;
-    if (high > low) {
-        mid = (high + low)/2; //find mid index of the array... wont allow other way to find min
-        count = mergesort(array, temp, low, mid); //merge sort left sub array
-        count += mergesort(array, temp, mid+1, high); //merge sort right sub array
-        count += merger(array, temp, low, mid+1, high); //merge two sub arrays
-    }
-    return count;
+    return 0;////////////////
 }
 
 int main(int argc, char *argv[]) {
     // TODO: parse command-line argument
-	bool useFast;
+    bool useFast;
                 // automatically use Fast version unless otherwise specified
 
     if (argc > 2) {                 // when there is more than 2 command line arguments ( other than name of file and "slow")
@@ -147,7 +97,9 @@ int main(int argc, char *argv[]) {
     }
 
     // TODO: produce output
-        if(values.empty()){
+
+// if no input
+    if(values.empty()){
         cerr << "Error: Sequence of integers not received." << endl;
         return 1;            
     }
@@ -172,5 +124,20 @@ int main(int argc, char *argv[]) {
 
 ///////////
 
+
+
+
+
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
