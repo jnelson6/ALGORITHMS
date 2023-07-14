@@ -1,11 +1,9 @@
 /*******************************************************************************
  * Name        : unique.cpp
  * Author      : Julia Nelson
- * Date        : September 20, 2019
+ * Date        : 02/18/2020
  * Description : Determining uniqueness of chars with int as bit vector. 
- 				You may NOT use the C++ bitset or any other library in your project.  
-				You MUST use a single unsigned int to represent your bitset 
-     			and use bitshifting and bitwise operations.
+ 				  (determines if a string has all unique lowercase letters)
  * Pledge      : I pledge my honor that I have abided by the Stevens Honor System.
  ******************************************************************************/
 #include <iostream>
@@ -14,67 +12,122 @@
 using namespace std;
 
 
-	// TODO: returns true if all characters in string are lowercase
-    // letters in the English alphabet; false otherwise.
+/**
+* Input takes in the reference to a string
+* Returns true if all characters in the string are lowercase
+* 			letters (in the English Alphabet)
+* Returns false otherwise
+*/
 bool is_all_lowercase(const string &s) {
-	for(char c : s){
-		if (!(c >= 'a' and c <= 'z')) return false;
+
+	for( char n : s) {
+		if( n <= 'z' && n >= 'a'){
+				return true;
+		}
 	}
-	return true;
+	return false;
 }
 
 
-    // TODO: returns true if all letters in string are unique, that is
-    // no duplicates are found; false otherwise.
-    // You may use only a single int for storage and work with bitwise
-    // and bitshifting operators.
-    // No credit will be given for other solutions.
+
+/**
+* Input takes in const reference to a string
+* Returns true f all letters in string are unique
+* 		  ( no duplicates )
+* Returns false otherwise
+*/
 bool all_unique_letters(const string &s) {
-    if(!is_all_lowercase(s)) return false;
 
-    // seen is a 32-bit bitset. seen no letters yet.
-    int letters_seen_bit_mask = 0;
-    // for every character in the string
-    for (const auto & letter: s) {
-        // Create bit mask from lower 5 bits of ASCII code.
-        // That fits within 32-bit bitset for [a..zA..Z] and
-        // will produce same value for 'a' and 'A'.
-        int letter_bit_mask = 1 << (letter & 0x1F);
-
-        // If the letter was seen already, return false
-        if (letters_seen_bit_mask & letter_bit_mask) return false;
-
-        // if haven't seen letter, add it to seen
-        letters_seen_bit_mask |= letter_bit_mask;
-    }
-    // if false not returned inside the loop, it must be unique
+	if( is_all_lowercase(s) != true ){ 
+		return false;
+	}
+	else{
+		int seen_letters = 0;
+    	for (const auto &  chars : s) {				// for every character in the string - shown in class by Dr. B 
+        	int mask = 1 << (chars & 0x1F);			// compares to alphabet
+        	if (seen_letters & mask) {				// when char seen already -> return false
+        		return false;
+        	}
+        	seen_letters |= mask;		 			// unseen letter -> add to seen_letters (|= operator found on stack overflow)
+    	}
+	}
     return true;
 }
 
 
-    // TODO: reads and parses command line arguments.
-    // Calls other functions to produce correct output.
+
+
+/**
+ * Main functions reads and pases command line args and calls
+ * other functions to produce correct output.
+ */
 int main(int argc, char * const argv[]) {
 
+
+
     if(argc != 2){
+
     	cout << "Usage: ./unique <string>" << endl;
     	return 0;
     }
 
-    else{
-    	string s = string(argv[1]);
+    string s = string(argv[1]);
+    if(is_all_lowercase(s) == false){
+    	cout << "Error: String must contain only lowercase letters." << endl;
+		return 0;
+    }
 
-    	if(!is_all_lowercase(s)){
-    		cout << "Error: String must contain only lowercase letters." << endl;
-    	}
-    	else{
-    		if(all_unique_letters(s)){
+    if(is_all_lowercase(s) == true){
+    		// checks for integers 
+    		for( char n : s){
+   				if( n == '0' || n == '1' || n == '2' || n == '3' || n == '4' || n == '5' || n == '6' || n == '7' || n == '8' || n == '9' ){
+   					cout << "Error: String must contain only lowercase letters." << endl;
+					return 0;
+   				}
+   			}
+
+			if(all_unique_letters(s)){
     			cout << "All letters are unique." << endl;
+    			return 0;
     		}
     		else{
     			cout << "Duplicate letters found." << endl;
+    			return 0;
     		}
+
+
+
     	}
     	return 1;
     }
-}
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

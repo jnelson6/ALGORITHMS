@@ -1,15 +1,16 @@
 #include <iostream>
 #include <sstream>
-#include <vector>
 
 using namespace std;
 
 // Struct to represent state of water in the jugs.
 struct State {
     int a, b, c;
-    vector<string> directions;
+    string directions;
+    State *parent;
     
-    State(int _a, int _b, int _c) : a(_a), b(_b), c(_c) { }
+    State(int _a, int _b, int _c, string _directions) : 
+        a{_a}, b{_b}, c{_c}, directions{_directions}, parent{nullptr} { }
     
     // String representation of state in tuple form.
     string to_string() {
@@ -20,7 +21,7 @@ struct State {
 };
 
 int main() {
-    State s(0, 0, 8);
+    State s(0, 0, 8, "Initial state.");
     cout << s.to_string() << endl;
     s.a += 3;
     s.c -= 3;
